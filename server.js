@@ -1,6 +1,11 @@
 const express = require('express')
 const app = express()
 const router=require('./router/auth-router');
+const connectdb=require('./utils/db');
+
+
+//he lihalywar apn aplya application madhe json cha use karu shakto
+app.use(express.json());
 
 
 //mhanje path chnage kara ani router file madhla content run karra khali jst na jata
