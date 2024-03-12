@@ -1,4 +1,5 @@
 const User=require("../models/user-model");
+const bcrypt = require('bcryptjs');
 
 //********home logic */
 const home = async (req,res)=>{
@@ -20,6 +21,7 @@ try {
     if(userExists){
         return res.status(400).json({msg:"email already exists"});
     }
+
 
     //to create user
     await User.create({username,email,phone,password});
