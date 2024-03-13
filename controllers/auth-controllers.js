@@ -31,7 +31,7 @@ const register =async(req,res)=>{
         const secPass=await bcrypt.hash(req.body.password, salt);
     
          user=await  User.create({
-            username: req.body.name,
+            user: req.body.name,
             email: req.body.email,
             password:secPass,
           });

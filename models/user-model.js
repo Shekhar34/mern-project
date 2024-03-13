@@ -5,7 +5,7 @@ const JWT_SECRET="shekhar$goodbody";
 const { Schema } = mongoose;
 
 const userSchema = new mongoose.Schema({
- username:{
+ user:{
     type:String,
     require:true,
  },
