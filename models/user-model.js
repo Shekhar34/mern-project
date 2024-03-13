@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+var jwt = require('jsonwebtoken');
+const JWT_SECRET="shekhar$goodbody";
 const { Schema } = mongoose;
 
 const userSchema = new mongoose.Schema({
@@ -27,22 +29,22 @@ const userSchema = new mongoose.Schema({
 
 });
 
-//secure password with bcrypt
-userSchema.pre('save',async function(next) {
-   console.log("pre method",this);
-   const user=this;
+//json web token
 
-   if(!user.isModified("password")){
-         next();
+const fetchuser=(req,res,next)=>{
+   //get user from jwttoken
+   const token = req.token('auth-token');
+   if(!token){
+       res.status(401).send({Error:"please authentictae using valid token"});
    }
    try {
-      var salt =await bcrypt.genSalt(10);
-      const hash_password= await bcrypt.hash(user.password,salt);
-      user.password=hash_password;
+       const data=jwt.verify(token,JWT_SECRET);
+       req.user=data.user;
+       next(); 
    } catch (error) {
-      next(error);
+       res.status(401).send({Error:"please authentictae using valid token"});
    }
- });
+}
 
 //model first letter is always capital
 const User = new mongoose.model('User', userSchema);
