@@ -45,8 +45,9 @@ const register =async(req,res)=>{
           res.json({authtoken});
         }
         catch(error){
-           console.log(error.message);
-           res.status(500).send("internal server error ");
+          //  console.log(error.message);
+          //  res.status(500).send("internal server error ");
+          next(error);
         }
 };
 
